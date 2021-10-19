@@ -1,44 +1,61 @@
 <?php
 
-// Bicycle.php
+  // Bicycle.php
 
-//c'est la classe qui genere les instances de l'index
-//propriete de la class
+  class Bicycle
+  {
 
-class Bicycle
-{
-      private string $color; //propriete
-      private int $currentSpeed; //propriete
-      private int $nbSeats = 1; //propriete
-      private int $nbWheels = 2; //propriete
+    /* ---------- PROPRIETES (public, private, protected------------ */
+    private string $color; /* >> visibilite privee */
+    private int $currentSpeed = 15;
+    private int $nbSeats = 1;
+    private int $nbWheels = 2;
+    private $hasLuggageRack = 0;
 
-      public function __construct(
-            string $color,
-            /* int $nbSeat,
-            int $nbWheels */
-        )
-        {
-            $this->color = $color;
-            /* $this->nbSeats = $nbSeats;
-            $this->nbWheels = $nbWheels; */
-        }
 
-      /**
-     * Get the value of color
-     */
-    public function getColor():string
+    /* ---------- METHODE MAGIQUE ------------ */
+    /* permet de mettre en place un comportement par defaut */
+    /* Un constructeur ne doit jamais rien retourner. Son but est seulement d'initialiser tout ou partie des propriétés de ton objet. */
+    /* BONNE PRATIQUE:  ton constructeur en toute première méthode de ton fichier (juste sous les propriétés) */
+
+    public function __construct(string $color) 
+    {
+    $this->color = $color; 
+    /* $this->color: correspond à la propriété de la classe définie avec private $color */
+    /* (string $color): parametre qui correspond à l'attribu $color de $this->color */
+    }
+
+    /* ---------- METHODES ------------ */
+
+    public function forward(): string
+    {
+    $this->currentSpeed = 5;  /* vitesse du velo 15 */
+
+    return "Go !"; /* pas de echo dans une methode */
+    }
+
+    public function brake(): string 
+    {
+   $sentence = "";
+   while ($this->currentSpeed > 0) {
+       $this->currentSpeed--;   /* si vitesse du velo 10 et currentSpeed 5 affichera 5 Brake avant d'ecrire stopped */
+       $sentence .= "Brake !!!"; /* si vitesse du velo 15 et currentSpeed 10 affichera 5 Brake avant d'ecrire stopped */
+    }
+   $sentence .= "I'm stopped !";
+   return $sentence;
+    }
+
+    /* ---------- GETTER SETTER ------------ */
+
+    public function getColor(): string /* renvoi la chaine de caracteres correspondant a la couleur >> visibilite public */
     {
         return $this->color;
     }
-
-    /**
-     * Set the value of color
-     */
-    public function setColor(string $color): void
-      {
-    $this->color = $color;
-      }
-
+    
+    public function setColor(string $color): void   
+    {
+        $this->color = $color;
+    }
 
     public function getCurrentSpeed(): int
     {
@@ -46,33 +63,13 @@ class Bicycle
     }
 
     public function setCurrentSpeed(int $currentSpeed): void
-      {
-    $this->currentSpeed = $currentSpeed;
-      }
-
-
-    public function forward(): string{
-        $this->currentSpeed = 15;
-        return "Go !" . PHP_EOL; 
+    {
+        if($currentSpeed >= 0) {
+            $this->currentSpeed = $currentSpeed;
         }
-    
-    public function brake(): string{
-        $sentence = "";
-            
-        while ($this->currentSpeed > 0){
-                $this->currentSpeed--;
-                $sentence .= "Brake !!!" . PHP_EOL;
-                }
-        $sentence .= "I'm stopped !";
-        return $sentence; 
-        }
-
-      public function dump()
-        {
-              var_dump($this);
-        }
-}
+    }
 
 
 
 
+  }
